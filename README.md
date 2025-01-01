@@ -20,7 +20,7 @@ First at all, use the command `python manage.py migrate` to change the user mode
 ```sh
 # check migrations list
 $python manage.py showmigrations
-# applay
+# aplay
 $python manage.py migrate
 ```
 
