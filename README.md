@@ -1,6 +1,6 @@
 # Django Logto Authentication
 
-[github.com/OkOtvet/django-logto-okotvet](+https://github.com/OkOtvet/django-logto-okotvet)
+[github.com/OkOtvet/django-logto-okotvet](https://github.com/OkOtvet/django-logto-okotvet)
 
 This README.md assumes that you already set up a Logto app for your front-end application. \
 
