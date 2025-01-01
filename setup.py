@@ -18,7 +18,7 @@ setup(
     author="Pulsation Studio",
     author_email="liam@pulsation.eco",
     description="DRF and Django Logto integration",
-    url="https://github.com/pulsation-studio/django-logto",
+    url="https://github.com/OkOtvet/django-logto-okotvet",
     long_description=long_description,
     long_description_content_type="text/markdown"
 )
