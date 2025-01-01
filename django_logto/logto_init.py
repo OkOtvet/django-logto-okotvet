@@ -28,7 +28,7 @@ class SessionStorage(Storage):
 def start_logto_client(request: HttpRequest):
     client = DjangoLogtoClient(
         LogtoConfig(
-            endpoint=f"{settings.LOGTO_ENDPOINT}/",
+            endpoint=f"{settings.LOGTO_ENDPOINT}",
             appId=settings.LOGTO_API_CLIENT_ID,
             appSecret=settings.LOGTO_API_SECRET
         ),
