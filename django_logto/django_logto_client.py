@@ -4,7 +4,12 @@ from typing import Optional
 
 from asgiref.sync import sync_to_async
 from logto import LogtoClient, LogtoConfig, Storage, LogtoException
-from logto.LogtoClient import AccessTokenMap, AccessToken, SignInSession, InteractionMode
+from logto.LogtoClient import (
+    AccessTokenMap,
+    AccessToken,
+    SignInSession,
+    InteractionMode,
+)
 from logto.OidcCore import OidcCore
 from logto.models.oidc import UserInfoScope, IdTokenClaims
 from logto.models.response import TokenResponse, UserInfoResponse
@@ -30,7 +35,9 @@ class DjangoLogtoClient(LogtoClient):
         except:
             return AccessTokenMap(x={})
 
-    async def _setAccessToken(self, resource: str, accessToken: str, expiresIn: int) -> None:
+    async def _setAccessToken(
+        self, resource: str, accessToken: str, expiresIn: int
+    ) -> None:
         """
         Set the access token for the given resource to storage.
         """
@@ -38,8 +45,8 @@ class DjangoLogtoClient(LogtoClient):
         accessTokenMap.x[resource] = AccessToken(
             token=accessToken,
             expiresAt=int(time.time())
-                      + expiresIn
-                      - 60,  # 60 seconds earlier to avoid clock skew
+            + expiresIn
+            - 60,  # 60 seconds earlier to avoid clock skew
         )
         await self._storage.set("accessTokenMap", accessTokenMap.model_dump_json())
 
@@ -54,8 +61,8 @@ class DjangoLogtoClient(LogtoClient):
             return accessToken
 
         if (
-                resource.startswith(OrganizationUrnPrefix)
-                and UserInfoScope.organizations not in self.config.scopes
+            resource.startswith(OrganizationUrnPrefix)
+            and UserInfoScope.organizations not in self.config.scopes
         ):
             raise LogtoException(
                 "The `UserInfoScope.organizations` scope is required to fetch organization tokens"
@@ -87,7 +94,7 @@ class DjangoLogtoClient(LogtoClient):
         return accessToken.token
 
     async def _handleTokenResponse(
-            self, resource: str, tokenResponse: TokenResponse
+        self, resource: str, tokenResponse: TokenResponse
     ) -> None:
         """
         Handle the token response from the Logto server and store the tokens to storage.
@@ -127,7 +134,7 @@ class DjangoLogtoClient(LogtoClient):
         await self._storage.set("signInSession", signInSession.model_dump_json())
 
     async def signIn(
-            self, redirectUri: str, interactionMode: Optional[InteractionMode] = None
+        self, redirectUri: str, interactionMode: Optional[InteractionMode] = None
     ) -> str:
         """
         Returns the sign-in URL for the given redirect URI. You should redirect the user
@@ -190,16 +197,16 @@ class DjangoLogtoClient(LogtoClient):
             )
 
         return (
-                endSessionEndpoint
-                + "?"
-                + urllib.parse.urlencode(
-            removeFalsyKeys(
-                {
-                    "client_id": self.config.appId,
-                    "post_logout_redirect_uri": postLogoutRedirectUri,
-                }
+            endSessionEndpoint
+            + "?"
+            + urllib.parse.urlencode(
+                removeFalsyKeys(
+                    {
+                        "client_id": self.config.appId,
+                        "post_logout_redirect_uri": postLogoutRedirectUri,
+                    }
+                )
             )
-        )
         )
 
     async def handleSignInCallback(self, callbackUri: str) -> None:
@@ -215,8 +222,8 @@ class DjangoLogtoClient(LogtoClient):
         # Validate the callback URI without query matches the redirect URI
         parsedCallbackUri = urllib.parse.urlparse(callbackUri)
         if (
-                parsedCallbackUri.path
-                != urllib.parse.urlparse(signInSession.redirectUri).path
+            parsedCallbackUri.path
+            != urllib.parse.urlparse(signInSession.redirectUri).path
         ):
             raise LogtoException(
                 "The URI path does not match the redirect URI in the sign-in session"

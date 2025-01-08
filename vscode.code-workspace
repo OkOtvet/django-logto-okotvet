@@ -1,0 +1,8 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "extensions": {
+    "recommendations": ["esbenp.prettier-vscode", "EditorConfig.EditorConfig", "yzhang.markdown-all-in-one", "mintlify.document", "ms-python.black-formatter"]
+  }
+}

@@ -6,4 +6,3 @@ urlpatterns = [
     path("signin/", SigninView.as_view(), name="signin"),
     path("callback/", CallbackView.as_view(), name="callback"),
 ]
-

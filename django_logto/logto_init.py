@@ -13,7 +13,7 @@ class SessionStorage(Storage):
 
     @sync_to_async
     def get(self, key: str):
-        return self.request.session.get(key, '')
+        return self.request.session.get(key, "")
 
     @sync_to_async
     def set(self, key: str, value: str | None) -> None:
@@ -30,9 +30,9 @@ def start_logto_client(request: HttpRequest):
         LogtoConfig(
             endpoint=f"{settings.LOGTO_ENDPOINT}",
             appId=settings.LOGTO_API_CLIENT_ID,
-            appSecret=settings.LOGTO_API_SECRET
+            appSecret=settings.LOGTO_API_SECRET,
         ),
-        storage=SessionStorage(request)
+        storage=SessionStorage(request),
     )
     return client
 
