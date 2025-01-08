@@ -16,7 +16,9 @@ class LogtoBackend(BaseBackend):
         if user_is_admin:
             return get_or_create_admin(logto_user)
         else:
-            raise PermissionDenied("You don't have the permissions to access Admin console")
+            raise PermissionDenied(
+                "You don't have the permissions to access Admin console"
+            )
 
     def get_user(self, user_id):
         logto_admin = LogtoUser.objects.filter(id=user_id).first()

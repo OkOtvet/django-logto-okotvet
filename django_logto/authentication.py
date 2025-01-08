@@ -10,7 +10,7 @@ from .utils import get_authenticated_logto_user, get_authorization_header, decod
 
 class LogtoAuthentication(BaseAuthentication):
     def authenticate(self, request: HttpRequest):
-        if request.accepted_renderer.format == 'api':
+        if request.accepted_renderer.format == "api":
             client: DjangoLogtoClient = start_logto_client(request)
             authenticated_user = get_authenticated_logto_user(client)
             return authenticated_user, None
@@ -23,16 +23,13 @@ class LogtoAuthentication(BaseAuthentication):
         if len(auth) < 2:
             raise AuthenticationFailed("Invalid token format")
 
-        elif auth[0] != 'Bearer':
+        elif auth[0] != "Bearer":
             raise AuthenticationFailed("Token type not supported")
 
         decoded_token: dict = decode_token(auth[1])
 
-        user_sub: str = decoded_token.get('sub')
+        user_sub: str = decoded_token.get("sub")
 
-        user = LogtoUser(
-            sub=user_sub,
-            username=None
-        )
+        user = LogtoUser(sub=user_sub, username=None)
 
         return user, None
